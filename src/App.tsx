@@ -214,7 +214,7 @@ export default function App() {
               <span className="text-xs font-bold text-[#003366] uppercase tracking-widest">Simulador de Performance</span>
             </div>
             <h1 className="text-4xl font-black text-[#003366] tracking-tight uppercase italic">Metas & Remuneração</h1>
-            <p className="text-slate-500 mt-1 font-medium">Projeção de Remuneração Variável Trimestral • 2Q26</p>
+            <p className="text-slate-500 mt-1 font-medium">Projeção de Remuneração Variável Trimestral</p>
           </div>
           <div className="flex items-center gap-4 bg-white p-4 border border-slate-200 shadow-sm">
             <div className="p-2 bg-[#003366] text-white">

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   TrendingUp, 
@@ -15,9 +15,7 @@ import {
   Percent,
   Calculator,
   ChevronRight,
-  Info,
-  Save,
-  CheckCircle2
+  Info
 } from 'lucide-react';
 
 const Tooltip = ({ text }: { text: string }) => {
@@ -66,7 +64,7 @@ const INITIAL_KPIS: KPI[] = [
     name: 'Atendimento Presencial', 
     description: 'Quantidade total de atendimentos presenciais feitos pelo time de Customer Success ao longo do período',
     weight: 30, 
-    target: 1000, 
+    target: 792, 
     actual: 950, 
     type: 'standard', 
     icon: MapPin 
@@ -76,7 +74,7 @@ const INITIAL_KPIS: KPI[] = [
     name: 'Atendimento Remoto', 
     description: 'Quantidade total de atendimentos remotos feitos pelo time de Customer Success ao longo do período',
     weight: 20, 
-    target: 500, 
+    target: 1128, 
     actual: 480, 
     type: 'standard', 
     icon: PhoneCall 
@@ -86,7 +84,7 @@ const INITIAL_KPIS: KPI[] = [
     name: 'DAU (Daily Active Users)', 
     description: 'Média do DAU (Daily Active Users) da carteira ao término do período de apuração. Utiliza-se como referência o indicador do término do período de apuração do ano anterior.',
     weight: 30, 
-    target: 85.5, 
+    target: 66.47, 
     actual: 88.2, 
     type: 'growth', 
     icon: Users 
@@ -96,7 +94,7 @@ const INITIAL_KPIS: KPI[] = [
     name: 'Desuso (NAU)', 
     description: 'Média do Desuso (PACC/NAU) da carteira ao término do período de apuração para usuários da plataforma BPRO e BAGRO. Utiliza-se como referência para meta o indicador do último mês de apuração do trimestre anterior',
     weight: 20, 
-    target: 12.5, 
+    target: 16.19, 
     actual: 10.8, 
     type: 'inverse', 
     icon: AlertCircle 
@@ -115,39 +113,6 @@ const BONUS_TABLE = [
 export default function App() {
   const [kpis, setKpis] = useState<KPI[]>(INITIAL_KPIS);
   const [baseSalary, setBaseSalary] = useState<number>(5000);
-  const [isSaved, setIsSaved] = useState(false);
-
-  // Load saved data on mount
-  useEffect(() => {
-    const savedKpis = localStorage.getItem('broadcast_sim_kpis');
-    const savedSalary = localStorage.getItem('broadcast_sim_salary');
-
-    if (savedKpis) {
-      try {
-        const parsedKpis = JSON.parse(savedKpis);
-        // Merge saved targets into INITIAL_KPIS to ensure we have all fields and latest weights
-        setKpis(INITIAL_KPIS.map(initial => {
-          const saved = parsedKpis.find((s: any) => s.id === initial.id);
-          return saved ? { ...initial, target: saved.target } : initial;
-        }));
-      } catch (e) {
-        console.error("Error loading saved KPIs", e);
-      }
-    }
-
-    if (savedSalary) {
-      setBaseSalary(parseFloat(savedSalary) || 5000);
-    }
-  }, []);
-
-  const saveToLocalStorage = () => {
-    const targetsToSave = kpis.map(k => ({ id: k.id, target: k.target }));
-    localStorage.setItem('broadcast_sim_kpis', JSON.stringify(targetsToSave));
-    localStorage.setItem('broadcast_sim_salary', baseSalary.toString());
-    
-    setIsSaved(true);
-    setTimeout(() => setIsSaved(false), 3000);
-  };
 
   const calculateAchievement = (kpi: KPI): number => {
     const { target, actual, weight, type } = kpi;
@@ -278,7 +243,7 @@ export default function App() {
             transition={{ delay: 0.2 }}
             className="bg-white p-6 border border-slate-200 shadow-sm"
           >
-            <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">Grade de Múltiplos</h3>
+            <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">Grade de múltiplos salariais no trimestre</h3>
             <div className="space-y-1">
               {BONUS_TABLE.map((tier, idx) => {
                 const isActive = totalAchievement >= tier.min && totalAchievement <= tier.max;
@@ -307,26 +272,6 @@ export default function App() {
           <div className="bg-slate-50 px-6 py-3 border-b border-slate-200 flex items-center justify-between">
             <div className="flex items-center gap-4">
               <h2 className="text-xs font-black text-[#003366] uppercase tracking-[0.2em]">Monitor de Indicadores (KPIs)</h2>
-              <button 
-                onClick={saveToLocalStorage}
-                className={`flex items-center gap-2 px-3 py-1 text-[10px] font-black uppercase tracking-widest transition-all border ${
-                  isSaved 
-                    ? 'bg-emerald-500 border-emerald-500 text-white' 
-                    : 'bg-white border-[#003366] text-[#003366] hover:bg-[#003366] hover:text-white'
-                }`}
-              >
-                {isSaved ? (
-                  <>
-                    <CheckCircle2 className="w-3 h-3" />
-                    Salvo com Sucesso
-                  </>
-                ) : (
-                  <>
-                    <Save className="w-3 h-3" />
-                    Salvar Metas Contratadas
-                  </>
-                )}
-              </button>
             </div>
             <div className="flex gap-4">
               <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase">
@@ -378,13 +323,9 @@ export default function App() {
                     </td>
                     <td className="p-4 text-center">
                       <div className="relative inline-block">
-                        <input 
-                          type="number" 
-                          step={['1', '2'].includes(kpi.id) ? "1" : "0.01"}
-                          value={kpi.target}
-                          onChange={(e) => handleInputChange(kpi.id, 'target', e.target.value)}
-                          className={`w-28 p-2 bg-white border border-slate-200 text-center text-sm font-black text-[#003366] focus:border-[#003366] outline-none transition-all ${['3', '4'].includes(kpi.id) ? 'pr-6' : ''}`}
-                        />
+                        <div className={`w-28 p-2 bg-slate-100 border border-slate-200 text-center text-sm font-black text-slate-500 select-none ${['3', '4'].includes(kpi.id) ? 'pr-6' : ''}`}>
+                          {kpi.target}
+                        </div>
                         {['3', '4'].includes(kpi.id) && (
                           <span className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 text-[10px] font-black">%</span>
                         )}

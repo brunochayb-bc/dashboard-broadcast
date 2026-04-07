@@ -65,7 +65,7 @@ const INITIAL_KPIS: KPI[] = [
     description: 'Quantidade total de atendimentos presenciais feitos pelo time de Customer Success ao longo do período',
     weight: 30, 
     target: 792, 
-    actual: 950, 
+    actual: 0, 
     type: 'standard', 
     icon: MapPin 
   },
@@ -75,7 +75,7 @@ const INITIAL_KPIS: KPI[] = [
     description: 'Quantidade total de atendimentos remotos feitos pelo time de Customer Success ao longo do período',
     weight: 20, 
     target: 1128, 
-    actual: 480, 
+    actual: 0, 
     type: 'standard', 
     icon: PhoneCall 
   },
@@ -85,7 +85,7 @@ const INITIAL_KPIS: KPI[] = [
     description: 'Média do DAY (Daily Active Users) dos usuários das plataformas BPRO e BAGRO ao término do período de apuração. Utiliza-se como referência o indicador do término do mesmo período de apuração do ano anterior.',
     weight: 30, 
     target: 66.47, 
-    actual: 88.2, 
+    actual: 0, 
     type: 'growth', 
     icon: Users 
   },
@@ -95,7 +95,7 @@ const INITIAL_KPIS: KPI[] = [
     description: 'Média do Desuso (PACC/NAU) da carteira ao término do período de apuração para usuários da plataforma BPRO e BAGRO. Utiliza-se como referência para meta o indicador do último mês de apuração do trimestre anterior',
     weight: 20, 
     target: 16.19, 
-    actual: 10.8, 
+    actual: 16.19, 
     type: 'inverse', 
     icon: AlertCircle 
   },
@@ -178,15 +178,24 @@ export default function App() {
               <div className="h-4 w-[1px] bg-slate-300"></div>
               <span className="text-xs font-bold text-[#003366] uppercase tracking-widest">Simulador de Performance</span>
             </div>
-            <h1 className="text-4xl font-black text-[#003366] tracking-tight uppercase italic">Metas & Remuneração</h1>
-            <p className="text-slate-500 mt-1 font-medium">Projeção de Remuneração Variável Trimestral</p>
+            <div className="mb-1">
+              <span className="bg-[#ff6600] text-white px-2 py-0.5 text-[10px] font-black uppercase tracking-widest">Customer Success</span>
+            </div>
+            <h1 className="text-4xl font-black text-[#003366] tracking-tight uppercase italic">Metas e Remuneração Variável</h1>
+            <div className="mt-2 space-y-1">
+              <p className="text-slate-500 font-medium">Projeção de Remuneração Variável Trimestral</p>
+              <p className="text-[#003366] text-xs font-black uppercase tracking-widest bg-slate-100 inline-block px-2 py-1">Período de Apuração: 2Q26</p>
+            </div>
           </div>
           <div className="flex items-center gap-4 bg-white p-4 border border-slate-200 shadow-sm">
             <div className="p-2 bg-[#003366] text-white">
               <span className="font-bold text-sm">R$</span>
             </div>
             <div>
-              <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Salário Base Atual</label>
+              <div className="flex flex-col">
+                <span className="text-[10px] font-black text-[#ff6600] uppercase tracking-widest mb-0.5">Informar Salário</span>
+                <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Salário Base Atual</label>
+              </div>
               <div className="flex items-center">
                 <span className="text-xl font-black text-[#003366] mr-1">R$</span>
                 <input 

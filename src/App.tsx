@@ -82,7 +82,7 @@ const INITIAL_KPIS: KPI[] = [
   { 
     id: '3', 
     name: 'DAU (Daily Active Users)', 
-    description: 'Média do DAU (Daily Active Users) da carteira ao término do período de apuração. Utiliza-se como referência o indicador do término do período de apuração do ano anterior.',
+    description: 'Média do DAY (Daily Active Users) dos usuários das plataformas BPRO e BAGRO ao término do período de apuração. Utiliza-se como referência o indicador do término do mesmo período de apuração do ano anterior.',
     weight: 30, 
     target: 66.47, 
     actual: 88.2, 

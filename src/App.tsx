@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, ChangeEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   TrendingUp, 
@@ -112,7 +112,23 @@ const BONUS_TABLE = [
 
 export default function App() {
   const [kpis, setKpis] = useState<KPI[]>(INITIAL_KPIS);
-  const [baseSalary, setBaseSalary] = useState<number>(5000);
+  const [baseSalary, setBaseSalary] = useState<number>(9161.09);
+  const [salaryDisplay, setSalaryDisplay] = useState<string>(
+    new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(9161.09)
+  );
+
+  const handleSalaryChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const rawValue = e.target.value.replace(/[^\d]/g, '');
+    const numericValue = parseFloat(rawValue) / 100;
+    
+    if (!isNaN(numericValue)) {
+      setBaseSalary(numericValue);
+      setSalaryDisplay(new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(numericValue));
+    } else if (rawValue === '') {
+      setBaseSalary(0);
+      setSalaryDisplay('0,00');
+    }
+  };
 
   const calculateAchievement = (kpi: KPI): number => {
     const { target, actual, weight, type } = kpi;
@@ -181,9 +197,9 @@ export default function App() {
             <div className="mb-1">
               <span className="bg-[#ff6600] text-white px-2 py-0.5 text-[10px] font-black uppercase tracking-widest">Customer Success</span>
             </div>
-            <h1 className="text-4xl font-black text-[#003366] tracking-tight uppercase italic">Metas e Remuneração Variável</h1>
+            <h1 className="text-4xl font-black text-[#003366] tracking-tight uppercase italic">Campanha Liderança Customer Success</h1>
             <div className="mt-2 space-y-1">
-              <p className="text-slate-500 font-medium">Projeção de Remuneração Variável Trimestral</p>
+              <p className="text-slate-500 font-medium">Projeção de Premiação</p>
               <p className="text-[#003366] text-xs font-black uppercase tracking-widest bg-slate-100 inline-block px-2 py-1">Período de Apuração: 2Q26</p>
             </div>
           </div>
@@ -199,10 +215,10 @@ export default function App() {
               <div className="flex items-center">
                 <span className="text-xl font-black text-[#003366] mr-1">R$</span>
                 <input 
-                  type="number" 
-                  value={baseSalary}
-                  onChange={(e) => setBaseSalary(parseFloat(e.target.value) || 0)}
-                  className="text-xl font-black text-[#003366] focus:outline-none w-32 bg-transparent"
+                  type="text" 
+                  value={salaryDisplay}
+                  onChange={handleSalaryChange}
+                  className="text-xl font-black text-[#003366] focus:outline-none w-40 bg-transparent"
                 />
               </div>
             </div>
@@ -235,7 +251,7 @@ export default function App() {
           >
             <div className="flex flex-col h-full justify-between">
               <div>
-                <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Remuneração Variável Estimada no Trimestre</span>
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Premiação Estimada no Trimestre</span>
                 <h2 className="text-5xl font-black text-[#003366] mt-2 leading-none">
                   {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(estimatedBonus)}
                 </h2>

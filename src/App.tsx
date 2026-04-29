@@ -105,9 +105,7 @@ const BONUS_TABLE = [
   { min: 0, max: 74.99, multiplier: 0 },
   { min: 75, max: 89.99, multiplier: 0.5 },
   { min: 90, max: 99.99, multiplier: 0.75 },
-  { min: 100, max: 109.99, multiplier: 1 },
-  { min: 110, max: 119.99, multiplier: 1.25 },
-  { min: 120, max: Infinity, multiplier: 1.5 },
+  { min: 100, max: Infinity, multiplier: 1 },
 ];
 
 export default function App() {

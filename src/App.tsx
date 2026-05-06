@@ -82,7 +82,7 @@ const INITIAL_KPIS: KPI[] = [
   { 
     id: '3', 
     name: 'DAU (Daily Active Users)', 
-    description: 'Média do DAU (Daily Active Users) dos usuários das plataformas BPRO e BAGRO ao término do período de apuração. Utiliza-se como referência o indicador do término do mesmo período de apuração do ano anterior.',
+    description: 'Média do DAU (Daily Active Users) dos usuários das plataformas BPRO e BAGRO ao término do período de apuração. Utiliza-se como referência o indicador do término do mesmo período de apuração do ano anterior. DAU de referência em junho/25 = 66,47%',
     weight: 30, 
     target: 66.47, 
     actual: 0, 
@@ -92,7 +92,7 @@ const INITIAL_KPIS: KPI[] = [
   { 
     id: '4', 
     name: 'Desuso (NAU)', 
-    description: 'Média do Desuso (PACC/NAU) da carteira ao término do período de apuração para usuários da plataforma BPRO e BAGRO. Utiliza-se como referência para meta o indicador do último mês de apuração do trimestre anterior',
+    description: 'Média do Desuso (PACC/NAU) da carteira ao término do período de apuração para usuários da plataforma BPRO e BAGRO. Utiliza-se como referência para meta o indicador do último mês de apuração do trimestre anterior. PACC/NAU de referência em março/26 = 16,19%',
     weight: 20, 
     target: 16.19, 
     actual: 16.19, 

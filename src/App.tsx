@@ -114,6 +114,7 @@ export default function App() {
   const [salaryDisplay, setSalaryDisplay] = useState<string>(
     new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(9161.09)
   );
+  const [isPartialModalOpen, setIsPartialModalOpen] = useState(false);
 
   const handleSalaryChange = (e: ChangeEvent<HTMLInputElement>) => {
     const rawValue = e.target.value.replace(/[^\d]/g, '');
@@ -387,7 +388,18 @@ export default function App() {
               </tbody>
               <tfoot>
                 <tr className="bg-[#003366] text-white">
-                  <td colSpan={4} className="p-4 pl-8 text-xs font-black uppercase tracking-[0.2em]">Atingimento Consolidado</td>
+                  <td colSpan={4} className="p-4 pl-8">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-black uppercase tracking-[0.2em]">Atingimento Consolidado</span>
+                      <button 
+                        onClick={() => setIsPartialModalOpen(true)}
+                        className="bg-[#ff6600] hover:bg-[#e65c00] text-white px-3 py-1 text-[10px] font-black uppercase tracking-widest transition-colors flex items-center gap-2"
+                      >
+                        <Calculator className="w-3 h-3" />
+                        Apuração Parcial
+                      </button>
+                    </div>
+                  </td>
                   <td className="p-4 pr-8 text-right">
                     <span className="text-2xl font-black">
                       {formatNumber(totalAchievement)}%
@@ -408,6 +420,85 @@ export default function App() {
           <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">© 2026 Simulador de Performance Corporativa • Dados em Tempo Real</p>
         </footer>
       </div>
+
+      {/* Partial Assessment Modal */}
+      <AnimatePresence>
+        {isPartialModalOpen && (
+          <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsPartialModalOpen(false)}
+              className="absolute inset-0 bg-slate-900/80 backdrop-blur-sm"
+            />
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              className="relative bg-white w-full max-w-md shadow-2xl overflow-hidden border-t-4 border-[#ff6600]"
+            >
+              <div className="bg-[#003366] p-6 text-white">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <span className="text-[10px] font-black uppercase tracking-widest text-white/60">Relatório de Desempenho</span>
+                    <h2 className="text-2xl font-black uppercase italic leading-none mt-1">Apuração Parcial</h2>
+                    <p className="text-[#ff6600] text-xs font-black uppercase tracking-tight mt-1">Status em 14/05/2026</p>
+                  </div>
+                  <button 
+                    onClick={() => setIsPartialModalOpen(false)}
+                    className="p-1 hover:bg-white/10 rounded transition-colors"
+                  >
+                    <TrendingUp className="w-5 h-5 rotate-45" /> {/* Use X icon if available, but trending up rotated looks like close or check */}
+                  </button>
+                </div>
+              </div>
+              <div className="p-6 space-y-4">
+                <div className="grid grid-cols-1 gap-3">
+                  <div className="flex justify-between items-center p-3 bg-slate-50 border-l-4 border-slate-300">
+                    <div className="flex items-center gap-3">
+                      <MapPin className="w-4 h-4 text-slate-400" />
+                      <span className="text-xs font-black text-slate-500 uppercase">Atendimento Presencial</span>
+                    </div>
+                    <span className="text-lg font-black text-[#003366]">315</span>
+                  </div>
+                  
+                  <div className="flex justify-between items-center p-3 bg-slate-50 border-l-4 border-slate-300">
+                    <div className="flex items-center gap-3">
+                      <PhoneCall className="w-4 h-4 text-slate-400" />
+                      <span className="text-xs font-black text-slate-500 uppercase">Atendimento Remoto</span>
+                    </div>
+                    <span className="text-lg font-black text-[#003366]">569</span>
+                  </div>
+                  
+                  <div className="flex justify-between items-center p-3 bg-slate-50 border-l-4 border-slate-300">
+                    <div className="flex items-center gap-3">
+                      <Users className="w-4 h-4 text-slate-400" />
+                      <span className="text-xs font-black text-slate-500 uppercase">DAU (Daily Active Users)</span>
+                    </div>
+                    <span className="text-lg font-black text-[#003366]">65,1%</span>
+                  </div>
+                  
+                  <div className="flex justify-between items-center p-3 bg-slate-50 border-l-4 border-slate-300">
+                    <div className="flex items-center gap-3">
+                      <AlertCircle className="w-4 h-4 text-slate-400" />
+                      <span className="text-xs font-black text-slate-500 uppercase">Desuso (NAU)</span>
+                    </div>
+                    <span className="text-lg font-black text-[#003366]">15,6%</span>
+                  </div>
+                </div>
+                
+                <button 
+                  onClick={() => setIsPartialModalOpen(false)}
+                  className="w-full bg-[#003366] text-white py-3 font-black uppercase tracking-widest text-xs hover:bg-[#002244] transition-colors mt-2"
+                >
+                  Fechar Relatório
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

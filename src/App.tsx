@@ -443,7 +443,7 @@ export default function App() {
                   <div>
                     <span className="text-[10px] font-black uppercase tracking-widest text-white/60">Relatório de Desempenho</span>
                     <h2 className="text-2xl font-black uppercase italic leading-none mt-1">Apuração Parcial</h2>
-                    <p className="text-[#ff6600] text-xs font-black uppercase tracking-tight mt-1">Status em 14/05/2026</p>
+                    <p className="text-[#ff6600] text-xs font-black uppercase tracking-tight mt-1">Status em 19/06/2026</p>
                   </div>
                   <button 
                     onClick={() => setIsPartialModalOpen(false)}
@@ -460,7 +460,7 @@ export default function App() {
                       <MapPin className="w-4 h-4 text-slate-400" />
                       <span className="text-xs font-black text-slate-500 uppercase">Atendimento Presencial</span>
                     </div>
-                    <span className="text-lg font-black text-[#003366]">315</span>
+                    <span className="text-lg font-black text-[#003366]">847</span>
                   </div>
                   
                   <div className="flex justify-between items-center p-3 bg-slate-50 border-l-4 border-slate-300">
@@ -468,7 +468,7 @@ export default function App() {
                       <PhoneCall className="w-4 h-4 text-slate-400" />
                       <span className="text-xs font-black text-slate-500 uppercase">Atendimento Remoto</span>
                     </div>
-                    <span className="text-lg font-black text-[#003366]">569</span>
+                    <span className="text-lg font-black text-[#003366]">2.000</span>
                   </div>
                   
                   <div className="flex justify-between items-center p-3 bg-slate-50 border-l-4 border-slate-300">
@@ -476,7 +476,7 @@ export default function App() {
                       <Users className="w-4 h-4 text-slate-400" />
                       <span className="text-xs font-black text-slate-500 uppercase">DAU (Daily Active Users)</span>
                     </div>
-                    <span className="text-lg font-black text-[#003366]">65,1%</span>
+                    <span className="text-lg font-black text-[#003366]">71,2%</span>
                   </div>
                   
                   <div className="flex justify-between items-center p-3 bg-slate-50 border-l-4 border-slate-300">
@@ -484,7 +484,7 @@ export default function App() {
                       <AlertCircle className="w-4 h-4 text-slate-400" />
                       <span className="text-xs font-black text-slate-500 uppercase">Desuso (NAU)</span>
                     </div>
-                    <span className="text-lg font-black text-[#003366]">15,6%</span>
+                    <span className="text-lg font-black text-[#003366]">15,5%</span>
                   </div>
                 </div>
                 
